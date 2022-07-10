@@ -1,21 +1,21 @@
-public class userAccount {
-	String username ;
-	String password ;
-	String role;
+public class UserAccount {
+	protected String username ;
+	protected String password ;
+	protected String role;
 	private int accountBalance;
 	
-	userAccount(String username, String password){
+	public UserAccount(String username, String password){
 		this.username = username;
 		this.password = password;
 		this.role = "Employee";
 	}
-	userAccount(String username, String password,String role, int accountBalance){
+	public UserAccount(String username, String password,String role, int accountBalance){
 		this(username, password);
 		this.role = role;
 		this.accountBalance = accountBalance;
 	}
 	
-	static userAccount login() {
+	static UserAccount login() {
 		ERS.scan.nextLine(); // fixes scanner bug
 		
 		System.out.println();
@@ -29,7 +29,7 @@ public class userAccount {
 		if(ERS.registeredAccounts.isEmpty()) {
 			System.out.println("No existing account.");
 		}else {
-			for (userAccount account: ERS.registeredAccounts) {
+			for (UserAccount account: ERS.registeredAccounts) {
 				if(username.equals(account.username) && password.equals(account.password)) {
 					return account;
 				}
@@ -54,7 +54,7 @@ public class userAccount {
 			if(ERS.registeredAccounts.isEmpty()) {
 				usernamePicked = true;
 			}else {
-				for(userAccount account: ERS.registeredAccounts) {
+				for(UserAccount account: ERS.registeredAccounts) {
 					if(username.equals(account.username)) {
 						System.out.println("Username already taken.");
 						usernamePicked = false;
@@ -70,7 +70,7 @@ public class userAccount {
 		System.out.print("Enter password: ");
 		String password = ERS.scan.nextLine();
 		
-		userAccount newAccount = new userAccount(username, password);
+		UserAccount newAccount = new UserAccount(username, password);
 		ERS.registeredAccounts.add(newAccount);
 	}
 	

@@ -2,16 +2,16 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class ERS {
-	static ArrayList<userAccount> registeredAccounts = new ArrayList<userAccount>();
-	static ArrayList<Ticket> ticketsList = new ArrayList<Ticket>();
-	static userAccount currentAccount = null;
+	protected static ArrayList<UserAccount> registeredAccounts = new ArrayList<UserAccount>();
+	protected static ArrayList<Ticket> ticketsList = new ArrayList<Ticket>();
+	protected static UserAccount currentAccount = null;
 	public static final Scanner scan = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		userAccount newAccount = new userAccount("Muhammad", "adison","Manager",1000000);
+		UserAccount newAccount = new UserAccount("Muhammad", "adison","Manager",1000000);
 		registeredAccounts.add(newAccount);
 		
-		newAccount = new userAccount("ali", "adison");
+		newAccount = new UserAccount("ali", "adison");
 		registeredAccounts.add(newAccount);
 		
 		
@@ -28,15 +28,15 @@ public class ERS {
 			int mainMenuOption = scan.nextInt();
 			switch (mainMenuOption) {
 			case 1:
-				currentAccount = userAccount.login(); 
+				currentAccount = UserAccount.login(); 
 				if(currentAccount != null) 
 					displayAccountMenu();				
 				break;
 			case 2:
-				userAccount.register();
+				UserAccount.register();
 				break;
 			case 3:
-				userAccount.showAllEmployees();
+				UserAccount.showAllEmployees();
 				break;
 			case 4:
 				System.out.println("Exiting program...");
@@ -88,7 +88,5 @@ public class ERS {
 			}	
 		}		
 	}
-
-
 	
 }
