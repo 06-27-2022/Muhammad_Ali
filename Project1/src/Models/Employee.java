@@ -1,154 +1,87 @@
-public class UserAccount {
-	protected String username ;
-	protected String password ;
-	protected String role;
+package Models;
+
+import java.util.Objects;
+
+public class Employee {
+	private int id;
+	private String username;
+	private String password;
+	private String role;
 	private int accountBalance;
-	
-	public UserAccount(String username, String password){
+
+	public Employee() {
+		
+	}
+
+	public Employee(int id, String username, String password, String role, int accountBalance) {
+		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.role = "Employee";
-	}
-	public UserAccount(String username, String password,String role, int accountBalance){
-		this(username, password);
 		this.role = role;
 		this.accountBalance = accountBalance;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public int getAccountBalance() {
+		return accountBalance;
+	}
+
+	public void setAccountBalance(int accountBalance) {
+		this.accountBalance = accountBalance;
+	}
+
 	
-	static UserAccount login() {
-		ERS.scan.nextLine(); // fixes scanner bug
-		
-		System.out.println();
-		System.out.println("---------Log in---------");
-		System.out.print("Enter username: ");
-		String username = ERS.scan.nextLine();
-		
-		System.out.print("Enter password: ");
-		String password = ERS.scan.nextLine();
-		
-		if(ERS.registeredAccounts.isEmpty()) {
-			System.out.println("No existing account.");
-		}else {
-			for (UserAccount account: ERS.registeredAccounts) {
-				if(username.equals(account.username) && password.equals(account.password)) {
-					return account;
-				}
-			}
-			System.out.println("Wrong username or password");
-		}
-		return null;	
-	}
-	
-	static void register() {
-		ERS.scan.nextLine(); // fixes scanner bug
-		
-		System.out.println();
-		System.out.println("---------Register an account---------");
-		String username = "";
-		
-		boolean usernamePicked = false;
-		while(!usernamePicked) {
-			System.out.print("Enter username: ");
-			username = ERS.scan.nextLine();
-			
-			if(ERS.registeredAccounts.isEmpty()) {
-				usernamePicked = true;
-			}else {
-				for(UserAccount account: ERS.registeredAccounts) {
-					if(username.equals(account.username)) {
-						System.out.println("Username already taken.");
-						usernamePicked = false;
-						break;
-					} else {
-						usernamePicked = true;
-					}
-				}
-			}
-
-		}
-		
-		System.out.print("Enter password: ");
-		String password = ERS.scan.nextLine();
-		
-		UserAccount newAccount = new UserAccount(username, password);
-		ERS.registeredAccounts.add(newAccount);
-	}
-	
-	static void showAllEmployees() {
-
-		System.out.println();
-		System.out.println("---------Employees list---------");
-		
-		for(int i = 0; i <ERS.registeredAccounts.size();i++) {
-			System.out.println((i+1) + ". " +
-					ERS.registeredAccounts.get(i).username + " - " + 
-					ERS.registeredAccounts.get(i).role);
-		}
-		System.out.println("--------------------------------");
-		
+	@Override
+	public String toString() {
+		return "[id=" + id + ", username=" + username + ", role=" + role + "]";
 	}
 
-	public void showAccountBalance() {
-		System.out.println("Account balance: $" + accountBalance);
+	@Override
+	public int hashCode() {
+		return Objects.hash(accountBalance, id, password, role, username);
 	}
 
-	public void makeNewTicket() {
-		
-		System.out.println();
-		System.out.print("Enter amount: ");
-		int amount = ERS.scan.nextInt();
-		
-		ERS.scan.nextLine(); // fixes scanner bug
-		System.out.print("Enter description: ");
-		String description = ERS.scan.nextLine();
-		
-		Ticket newTicket = new Ticket(amount, description, "Pending", ERS.currentAccount, null);
-		ERS.ticketsList.add(newTicket);
-	}
-	
-	public void showEmployeePendingRequests() {
-		System.out.println();
-		System.out.println("---------Pending requests---------");
-		
-		for(int i = 0; i <ERS.ticketsList.size();i++) {
-			if(ERS.ticketsList.get(i).madeBy.equals(ERS.currentAccount) &&
-					ERS.ticketsList.get(i).status == "Pending") {
-				System.out.println((i+1) + ". $" +
-						ERS.ticketsList.get(i).amount + " - " +
-						ERS.ticketsList.get(i).description + " - " + 
-						ERS.ticketsList.get(i).status);
-			}
-			
-		}
-		System.out.println("--------------------------------");
-	}
-
-	public void manageRequests() {
-		System.out.println();
-		System.out.println("---------Reimbursement requests---------");
-		
-		for(int i = 0; i <ERS.ticketsList.size();i++) {
-			if(ERS.ticketsList.get(i).status == "Pending") {
-				System.out.println((i+1) + ". $" +
-						ERS.ticketsList.get(i).amount + " - " + 
-						ERS.ticketsList.get(i).description + " - " + 
-						ERS.ticketsList.get(i).madeBy.username);
-				
-				System.out.println("Accept(a)/ Deny(d): ");
-				char managerInput = ERS.scan.next().charAt(0);
-				if(managerInput == 'a') {
-					ERS.currentAccount.accountBalance -= ERS.ticketsList.get(i).amount;
-					ERS.ticketsList.get(i).madeBy.accountBalance += ERS.ticketsList.get(i).amount;
-					ERS.ticketsList.get(i).status = "Approved";
-					System.out.println("Request accepted.");
-					System.out.println("You now have $" + ERS.currentAccount.accountBalance + " in your account.");
-				}else if(managerInput == 'd') {
-					System.out.println("Request denied.");
-					ERS.ticketsList.get(i).status = "Denied";
-				}
-			}
-			System.out.println();
-		}		
-		System.out.println("--------------------------------");
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		return accountBalance == other.accountBalance && id == other.id && Objects.equals(password, other.password)
+				&& Objects.equals(role, other.role) && Objects.equals(username, other.username);
 	}
 }
