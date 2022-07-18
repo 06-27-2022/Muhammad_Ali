@@ -19,11 +19,13 @@ public class ERS {
 	public static void main(String[] args) {
 		DAO dao = new DAO();
 		employeesList = dao.retrieveEmployeesList();
-
+		ticketsList = dao.retrieveTicketsList();
+		
 		boolean quit = false;
 		while (!quit) {
 
 			System.out.println();
+			System.out.println("---------Main menu---------");
 			System.out.println("1) Login");
 			System.out.println("2) Register");
 			System.out.println("3) Show all employees");
@@ -45,6 +47,7 @@ public class ERS {
 				AccountUtil.showAllEmployees();
 				break;
 			case 4:
+				System.out.println();
 				System.out.println("Exiting program...");
 				quit = true;
 				scan.close();

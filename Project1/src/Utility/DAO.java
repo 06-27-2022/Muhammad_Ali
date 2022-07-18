@@ -40,7 +40,6 @@ public class DAO {
 			e.printStackTrace();
 		}finally {
 			try {
-				System.out.println("Employees list retrieved.");
 				conn.close();
 				stmt.close();
 				set.close();

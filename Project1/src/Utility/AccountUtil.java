@@ -53,7 +53,7 @@ public class AccountUtil {
 
 		Employee newAccount = new Employee(0, username, password, "doesn't matter", 0);
 		DAO dao = new DAO();
-		// dao.addNewEmployee(newAccount);
+		dao.addNewEmployee(newAccount);
 	}
 
 	public static void showAllEmployees() {
@@ -73,6 +73,13 @@ public class AccountUtil {
 				return employee.getAccountBalance();
 		}
 		return 0;
+	}
+
+	public static void setAccountBalanceByID(int id, int newBalance) {
+		for (Employee employee: ERS.employeesList) {
+			if(employee.getId() == id)
+				employee.setAccountBalance(newBalance);
+		}
 	}
 	
 	public static String getUsernameByID(int id) {

@@ -6,15 +6,15 @@ import Utility.TicketUtil;
 
 public class AccountMenu {
 	static void displayAccountMenu() {
-		System.out.println("Welcome " + ERS.currentAccount.getUsername());
+		System.out.println();
+		System.out.println("---------Welcome " + ERS.currentAccount.getUsername()+"---------");
 		DAO dao = new DAO();
 		
 		boolean logOut = false;
 		while (!logOut) {
-			ERS.employeesList = dao.retrieveEmployeesList();
-			ERS.ticketsList = dao.retrieveTicketsList();
 			
 			System.out.println();
+			System.out.println("---------Account menu---------");
 			System.out.println("1) Show Balance");
 
 			if (ERS.currentAccount.getRole().equals("associate"))
@@ -32,19 +32,25 @@ public class AccountMenu {
 
 			switch (userMenuOption) {
 			case 1:
-				System.out.println("Account balance: $" + ERS.currentAccount.getAccountBalance());
+				System.out.println();
+				System.out.println("---------Account balance---------");
+				System.out.println("$" + ERS.currentAccount.getAccountBalance());
 				break;
 			case 2:
 				if (ERS.currentAccount.getRole().equals("associate")) {
 					TicketUtil.makeNewTicket();
 				} else if (ERS.currentAccount.getRole().equals("manager"))
 					TicketUtil.manageRequests();
+				
+				ERS.employeesList = dao.retrieveEmployeesList();
+				ERS.ticketsList = dao.retrieveTicketsList();
 				break;
 			case 3:
 				if (ERS.currentAccount.getRole().equals("associate"))
 					TicketUtil.showEmployeePendingRequests();
 				break;
 			case 4:
+				System.out.println();
 				System.out.println("Logging out...");
 				logOut = true;
 				break;
