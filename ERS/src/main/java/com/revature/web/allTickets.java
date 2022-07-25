@@ -33,8 +33,10 @@ public class allTickets extends HttpServlet {
 			ObjectMapper myMapper = new ObjectMapper();
 			String json = myMapper.writeValueAsString(ticketsList);
 			response.getWriter().write(json);
-		}else
+		}else {
 			response.getWriter().write("You don't have permission to access Tickets List.\n");
+			response.setStatus(401);
+		}
 		
 	}
 }

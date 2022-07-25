@@ -39,8 +39,15 @@ public class register extends HttpServlet {
 				Employee newAccount = new Employee(0, username, password, "doesn't matter", 0);
 				dao.addNewEmployee(newAccount);
 				response.getWriter().write("New employee added.");
-			} else response.getWriter().write("Username already taken.");
-		} else response.getWriter().write("Username or password invalid.");
+				response.setStatus(201);
+			} else {
+				response.setStatus(400);
+				response.getWriter().write("Username already taken.");
+			}
+		} else {
+			response.getWriter().write("Username or password invalid.");
+			response.setStatus(400);
+		}
 	}
 
 }

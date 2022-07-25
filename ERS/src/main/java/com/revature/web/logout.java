@@ -21,6 +21,7 @@ public class logout extends HttpServlet {
 			response.getWriter().write("Logged out.");
 			CookiesHandler.setCookieValue(request, response, "authenticated", "false");
 			CookiesHandler.setCookieValue(request, response, "UserID", "0");
+			response.setStatus(201);
 		}else 
 			response.getWriter().write("Not logged in.");
 	}

@@ -41,6 +41,7 @@ public class login extends HttpServlet {
 				Cookie idCookie = new Cookie("UserID", String.valueOf(account.getId()));
 				response.addCookie(idCookie);
 				successfullLogin = true;
+				response.setStatus(201);
 			}
 		}
 		if(!successfullLogin) {

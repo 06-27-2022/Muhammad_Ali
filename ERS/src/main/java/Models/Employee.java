@@ -2,9 +2,12 @@ package Models;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Employee {
 	private int id;
 	private String username;
+	@JsonIgnore
 	private String password;
 	private String role;
 	private int accountBalance;

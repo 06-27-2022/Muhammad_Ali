@@ -43,9 +43,12 @@ public class newTicket extends HttpServlet {
 				DAO dao = new DAO();
 				response.getWriter().write("Reimbursement request sent.\n");
 				dao.makeNewTicket(newTicket);
+				response.setStatus(201);
 			}
-		}else
+		}else{
 			response.getWriter().write("You don't have permission to submit reimbursement requests.\n");
+			response.setStatus(401);
+		}
 
 	}
 

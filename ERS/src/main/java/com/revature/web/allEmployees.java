@@ -32,7 +32,11 @@ public class allEmployees extends HttpServlet {
 			ObjectMapper myMapper = new ObjectMapper();
 			String json = myMapper.writeValueAsString(employeesList);
 			response.getWriter().write(json);
-		} else response.getWriter().write("You don't have permission to access employees list.\n");
+			response.setStatus(200);
+		} else {
+			response.getWriter().write("You don't have permission to access employees list.\n");
+			response.setStatus(401);
+		}
 	}
 
 }

@@ -52,15 +52,23 @@ public class processTicket extends HttpServlet {
 							dao.updateTicketStatus(ticket.getTicketID(), "Approved", manager.getId());
 
 							response.getWriter().write("Request approved.\n");
+							response.setStatus(201);
 						} else response.getWriter().write("You don't have enough balance to approve this request.\n");
 						
 					} else {
 						response.getWriter().write("Request declined.\n");
 						dao.updateTicketStatus(ticket.getTicketID(), "Declined", manager.getId());
+						response.setStatus(201);
 					}
-				} else response.getWriter().write("Ticket already processed.\n");
+				} else {
+					response.getWriter().write("Ticket already processed.\n");
+					response.setStatus(403);
+				}
 			} else response.getWriter().write("Ticket doesn't exist.\n");
-		} else response.getWriter().write("You don't have permission to process tickets.\n");
+		} else {
+			response.getWriter().write("You don't have permission to process tickets.\n");
+			response.setStatus(401);
+		}
 	}
 
 }
